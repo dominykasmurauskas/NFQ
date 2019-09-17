@@ -17,7 +17,7 @@ class ClientTests extends TestCase
     
     /** @test */
     public function a_client_can_register()
-    {   
+    {   $this->withoutExceptionHandling();
         $client = factory('App\Client')->create();
         $this->post('/client-register', $client->toArray())->assertRedirect('/');
         $this->assertDatabaseHas('clients', $client->toArray());
@@ -34,5 +34,12 @@ class ClientTests extends TestCase
     {
         $client = factory('App\Client')->raw(['service' => '']);
         $this->post('/client-register', $client)->assertSessionHasErrors('service');
+    }
+    /** @test */
+    public function a_client_can_check_time_remaining()
+    {
+        $this->withoutExceptionHandling();
+        $client = factory('App\Client')->create();
+        $this->post('/time-remaining', $client->toArray())->assertRedirect('/');
     }
 }

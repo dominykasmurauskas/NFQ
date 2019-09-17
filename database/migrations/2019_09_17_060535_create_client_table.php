@@ -19,6 +19,7 @@ class CreateClientTable extends Migration
             $table->unsignedInteger('ticket');
             $table->unsignedInteger('service');
             $table->boolean('is_completed')->default(false);
+            $table->timestamp('estimated_visit_time');
             $table->timestamps();
         });
     }
