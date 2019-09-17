@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $clients = App\Client::where('is_completed', '0')->limit(5)->get();
+    return view('welcome', compact('clients'));
 });
+
+Route::get('/client-register', 'ClientsController@create');
+
+Route::post('/client-register', 'ClientsController@store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
