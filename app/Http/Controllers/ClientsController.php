@@ -24,7 +24,7 @@ class ClientsController extends Controller
             'email' => 'required'
         ]);
         $attributes['ticket'] = $faker->unique()->numberBetween($min = $attributes['service'] * 100, $max = (($attributes['service'] + 1) * 100) - 1);
-        $client = Client::where('estimated_visit_time', '>', Carbon::now())->where('service', $attributes['service'])->where('is_completed', false)->orderByDesc('estimated_visit_time')->first();
+        $client = Client::where('estimated_visit_time', '>', Carbon::now())->where('service', $attributes['service'])->where('completed_at', false)->orderByDesc('estimated_visit_time')->first();
         if($client != null) {
             $attributes['estimated_visit_time'] = $client->estimated_visit_time->addMinutes(20);
         }
@@ -57,6 +57,18 @@ class ClientsController extends Controller
         }
             
         return redirect('/');
+    }
+    
+    public function update(Client $client)
+    {
+        $client['completed_at'] = Carbon::now();
+        $client->save();
+        return redirect('admin');
+    }
+    public function destroy(Client $client)
+    {
+        $client->delete();
+        return redirect('admin');
     }
     
 }

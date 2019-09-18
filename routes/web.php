@@ -12,9 +12,13 @@
 */
 
 Route::get('/', function () {
-    $clients = App\Client::where('estimated_visit_time', '>', Carbon\Carbon::now())->where('is_completed', '0')->orderBy('estimated_visit_time')->limit(5)->get();
+    $clients = App\Client::where('estimated_visit_time', '>', Carbon\Carbon::now())->where('completed_at', null)->orderBy('estimated_visit_time')->limit(5)->get();
     return view('welcome', compact('clients'));
 });
+
+Route::patch('/clients/completed/{client}', 'ClientsController@update')->middleware('IsAdmin');
+
+Route::delete('/clients/delete/{client}', 'ClientsController@destroy')->middleware('IsAdmin');
 
 Route::get('/client-register', 'ClientsController@create');
 

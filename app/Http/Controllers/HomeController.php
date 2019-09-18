@@ -26,9 +26,11 @@ class HomeController extends Controller
     public function index()
     {
         $clients = null;
-        $presentClients = Client::where('service', auth()->user()->service_id)->where('is_completed', '0')->where('estimated_visit_time', '<', Carbon::now())->orderBy('estimated_visit_time')->get();
-        $waitingClients = Client::where('service', auth()->user()->service_id)->where('is_completed', '0')->where('estimated_visit_time', '>', Carbon::now())->orderBy('estimated_visit_time')->get();
-        return view('admin', compact('presentClients', 'waitingClients'));
+        $presentClients = Client::where('service', auth()->user()->service_id)->where('completed_at', null)->where('estimated_visit_time', '<', Carbon::now())->orderBy('estimated_visit_time')->get();
+        $waitingClients = Client::where('service', auth()->user()->service_id)->where('completed_at', null)->where('estimated_visit_time', '>', Carbon::now())->orderBy('estimated_visit_time')->get();
+        $completedClients = Client::where('service', auth()->user()->service_id)->whereNotNull('completed_at')->orderBy('estimated_visit_time')->get();
+
+        return view('admin', compact('presentClients', 'waitingClients', 'completedClients'));
             
     }
 }
