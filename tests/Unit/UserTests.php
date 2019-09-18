@@ -13,18 +13,28 @@ class UserTests extends TestCase
     /** @test */
     public function user_can_not_see_admin_page_if_does_not_have_permissions()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
         $this->get('/admin')->assertRedirect('/');
     }
     /** @test */
     public function user_can_visit_admin_page_if_is_admin()
     {
-        $this->withoutExceptionHandling();
         $admin = factory('App\User')->create();
         $admin['is_admin'] = true;
         $this->actingAs($admin);
         $this->get('/admin')->assertStatus(200)->assertViewIs('admin');
     }
     /** @test */
+    public function admin_can_see_all_clients_of_his_clients() 
+    {
+        $this->withoutExceptionHandling();
+        $admin = factory('App\User')->create();
+        $admin['is_admin'] = true;
+        $admin['service_id'] = 1;
+        $this->actingAs($admin);
+        $client = factory('App\Client')->create();
+        $client['service'] = $admin->service_id;
+        $client->save();
+        $this->get('/admin')->assertSee($client->name);
+    }
 }

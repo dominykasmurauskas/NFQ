@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Client;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,7 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin');
+        $clients = null;
+        $presentClients = Client::where('service', auth()->user()->service_id)->where('is_completed', '0')->where('estimated_visit_time', '<', Carbon::now())->orderBy('estimated_visit_time')->get();
+        $waitingClients = Client::where('service', auth()->user()->service_id)->where('is_completed', '0')->where('estimated_visit_time', '>', Carbon::now())->orderBy('estimated_visit_time')->get();
+        return view('admin', compact('presentClients', 'waitingClients'));
             
     }
 }
