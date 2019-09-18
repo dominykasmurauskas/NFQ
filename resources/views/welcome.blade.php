@@ -3,6 +3,8 @@
 
 @section('content')
 <meta http-equiv="refresh" content="5">
+
+
 <div class="col-lg-6 offset-lg-3 col-sm-12" style="margin-top: 20%">
   <div style="margin: 0 auto; width: 100%">
     <p style="font-size: 10px; color: white">Paskutinį kartą atnaujinta: {{ Carbon::now() }}</p>
@@ -13,7 +15,7 @@
           <div class="form-group mb-2">
             <input style="margin-right: 10px" class="form-control" type="text" name="ticket" placeholder="Įveskite savo bilietėlio nr." required>
           </div>
-          <button type="submit" class="btn btn-dark mb-2" style="margin-right: 20px">Tikrinti laiką</button>
+          <button type="submit" class="btn btn-dark mb-2" style="margin-right: 20px">Tikrinti savo laiką</button>
         </form>
         <a href="/client-register" style="position:relative; margin-left: auto"><button type="button" class="btn btn-dark">Registracija</button></a>
 
@@ -30,6 +32,9 @@
    
 </div>
 <style>
+  #mainbar {
+    width: 100%;
+  }
   .btn.btn-dark {
     border: 1px solid white;
   }
