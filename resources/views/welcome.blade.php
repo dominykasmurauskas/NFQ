@@ -6,7 +6,7 @@
 <div class="col-lg-6 offset-lg-3 col-sm-12" style="margin-top: 20%">
   <div style="margin: 0 auto; width: 100%">
     <p style="font-size: 10px; color: white">Paskutinį kartą atnaujinta: {{ Carbon::now() }}</p>
-    @include('table');
+    @include('table')
       <div class="row" id="actions" style="margin-top: 10%">
         <form method="POST" class="form-inline float-left" action="/time-remaining">
           @csrf
@@ -40,10 +40,14 @@
   }
   td {
     text-align: center;
-    font-size: 12px;
+    font-size: 16px;
+    font-family: 'Josefin Slab', serif;
   }
   #actions {
     vertical-align: middle !important;
+  }
+  table {
+    color: white !important;
   }
 </style>
 @endsection

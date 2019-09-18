@@ -36,6 +36,12 @@ class ClientTests extends TestCase
         $this->post('/client-register', $client)->assertSessionHasErrors('service');
     }
     /** @test */
+    public function a_client_has_provided_his_email()
+    {
+        $client = factory('App\Client')->raw(['email' => '']);
+        $this->post('/client-register', $client)->assertSessionHasErrors('email');
+    }
+    /** @test */
     public function a_client_can_check_time_remaining()
     {
         $this->withoutExceptionHandling();

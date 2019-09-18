@@ -17,6 +17,7 @@ class CreateClientTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('ticket');
+            $table->string('email');
             $table->unsignedInteger('service');
             $table->boolean('is_completed')->default(false);
             $table->timestamp('estimated_visit_time');

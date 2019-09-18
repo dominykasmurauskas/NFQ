@@ -20,7 +20,8 @@ class ClientsController extends Controller
     {
         $attributes = request()->validate([
             'name' => 'required', 
-            'service' => 'required'
+            'service' => 'required',
+            'email' => 'required'
         ]);
         $attributes['ticket'] = $faker->unique()->numberBetween($min = $attributes['service'] * 100, $max = (($attributes['service'] + 1) * 100) - 1);
         $client = Client::where('estimated_visit_time', '>', Carbon::now())->where('service', $attributes['service'])->where('is_completed', false)->orderByDesc('estimated_visit_time')->first();

@@ -1,5 +1,5 @@
 <?php use Carbon\Carbon;?>
-<table class="table table-dark" id="data">
+<table class="table" id="data">
     <thead>
       <tr>
         <th scope="col">Nr.</th>
