@@ -20,6 +20,8 @@ Route::patch('/clients/completed/{client}', 'ClientsController@update')->middlew
 
 Route::delete('/clients/delete/{client}', 'ClientsController@destroy')->middleware('IsAdmin');
 
+Route::get('/client/{key}', 'ClientsController@show');
+
 Route::get('/client-register', 'ClientsController@create');
 
 Route::post('/client-register', 'ClientsController@store');

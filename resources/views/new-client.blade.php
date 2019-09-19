@@ -7,11 +7,11 @@
     <h3 style="text-align: left; color: white; margin-bottom: 10%">Naujo kliento registracija</h3>
       <div class="form-group">
         <label for="name" style="color: white;">Jūsų vardas: </label>
-        <input type="text" class="form-control" name="name" placeholder="Vardenis Pavardenis" required>
+        <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Vardenis Pavardenis" required>
       </div>
       <div class="form-group">
         <label for="email" style="color: white;">Jūsų el. paštas: </label>
-        <input type="email" class="form-control" name="email" placeholder="Vardenis@pastas.lt" required>
+        <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Vardenis@pastas.lt" required>
       </div>
       <div class="form-group">
         <label for="service" style="color: white;">Paslaugos nr.: </label>

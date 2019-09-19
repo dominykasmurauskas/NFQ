@@ -44,8 +44,14 @@ class ClientTests extends TestCase
     /** @test */
     public function a_client_can_check_time_remaining()
     {
-        $this->withoutExceptionHandling();
         $client = factory('App\Client')->create();
         $this->post('/time-remaining', $client->toArray())->assertRedirect('/');
+    }
+    /** @test */
+    public function a_client_can_access_his_dashboard()
+    {
+        # code...
+        $client = factory('App\Client')->create();
+        $this->get($client->path(), $client->toArray())->assertStatus(200);
     }
 }

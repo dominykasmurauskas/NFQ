@@ -25,12 +25,15 @@ class ClientsController extends Controller
         ]);
         $attributes['ticket'] = $faker->unique()->numberBetween($min = $attributes['service'] * 100, $max = (($attributes['service'] + 1) * 100) - 1);
         $client = Client::where('estimated_visit_time', '>', Carbon::now())->where('service', $attributes['service'])->where('completed_at', false)->orderByDesc('estimated_visit_time')->first();
+        
         if($client != null) {
             $attributes['estimated_visit_time'] = $client->estimated_visit_time->addMinutes(20);
         }
         else {
             $attributes['estimated_visit_time'] = Carbon::now()->addMinutes(20);
         }
+        
+        $attributes['special_key'] = str_random(20);
         Client::create($attributes);
         session()->flash('ticket', 'Užregistruota sėkmingai. Jūsų bilietėlio nr.: ' . $attributes['ticket']);
         
@@ -69,6 +72,14 @@ class ClientsController extends Controller
     {
         $client->delete();
         return redirect('admin');
+    }
+    
+    public function show($key)
+    {
+        $client = Client::where('special_key', $key)->firstOrFail();
+        
+        return view('client', compact('client'));
+        
     }
     
 }

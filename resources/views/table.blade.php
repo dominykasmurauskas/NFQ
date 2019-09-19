@@ -16,7 +16,7 @@
             <td>{{ $client->name}}</td>
             <td>{{ $client->service }}</td>
             <td>{{ $client->estimated_visit_time }}</td>
-            <td>{{ (new Carbon($client->estimated_visit_time))->diff(Carbon::now())->format('%h:%I') }}</td>
+            <td>{{ $client->timeleft() }}</td>
          </tr>
       @empty
         <tr>

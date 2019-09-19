@@ -16,4 +16,14 @@ class Client extends Model
         $duration = (new Carbon($this->estimated_visit_time))->diff($this->estimated_visit_time)->format('%h:%I');
         return $duration;
     }
+    
+    public function path() {
+        return '/client/' . $this->special_key;
+    }
+    
+    public function timeleft()
+    {
+        return (new Carbon($this->estimated_visit_time))->diff(Carbon::now())->format('%h:%I');
+    }
+    
 }

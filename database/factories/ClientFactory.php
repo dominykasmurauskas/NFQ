@@ -8,6 +8,7 @@ $factory->define(App\Client::class, function (Faker $faker) {
         'name' => $faker->name,
         'ticket' => $faker->unique()->randomNumber(),
         'email' => $faker->email(),
+        'special_key' => str_random(20),
         'service' => $faker->numberBetween(0, 5),
         'estimated_visit_time' => $faker->dateTime()
     ];

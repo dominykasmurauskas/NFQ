@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<?php use Carbon\Carbon;?>
 <h1 class="text-center" style="margin-top: 10px; margin-bottom: 10px">Specialisto puslapis</h1>
 <p class="text-center">Sveiki, {{ auth()->user()->name }}! Šiame puslapyje matote klientus, kurie pasirinko {{ auth()->user()->service_id }} paslaugą.</p>
 <div>
@@ -65,7 +64,7 @@
               <td>{{ $client->name}}</td>
               <td>{{ $client->service }}</td>
               <td>{{ $client->estimated_visit_time }}</td>
-              <td>{{ (new Carbon($client->estimated_visit_time))->diff(Carbon::now())->format('%h:%I') }}</td>
+              <td>{{ $client->timeleft() }}</td>
               <td>
               <div class="actions" style="display: flex">
                 <form method="POST" action="/clients/completed/{{ $client->id }}">
