@@ -6,6 +6,7 @@
 
 
 <div class="col-lg-6 offset-lg-3 col-sm-12" style="margin-top: 20%">
+  <h2 style="color: white">Švieslentė</h2>
   <div style="margin: 0 auto; width: 100%">
     <p style="font-size: 10px; color: white">Paskutinį kartą atnaujinta: {{ Carbon::now() }}</p>
     @include('table')

@@ -9,11 +9,11 @@ class Client extends Model
     //
     protected $guarded = [];
     
-    protected $dates = ['created_at', 'updated_at', 'estimated_visit_time'];
+    protected $dates = ['created_at', 'updated_at', 'estimated_visit_time', 'completed_at'];
     
     public function visitDuration()
     {
-        $duration = (new Carbon($this->estimated_visit_time))->diff($this->estimated_visit_time)->format('%h:%I');
+        $duration = (new Carbon($this->estimated_visit_time))->diff($this->completed_at)->format('%h:%I');
         return $duration;
     }
     

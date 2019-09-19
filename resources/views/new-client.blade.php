@@ -26,6 +26,11 @@
       <button type="submit" class="btn btn-dark" style="float: right;">Registruotis</button>
 </form>
 </div>
+<style>
+  .btn {
+    border: 1px solid white;
+  }
+</style>
 
 
 @endsection
