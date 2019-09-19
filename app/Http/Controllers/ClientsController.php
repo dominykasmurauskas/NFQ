@@ -23,14 +23,19 @@ class ClientsController extends Controller
             'service' => 'required',
             'email' => 'required'
         ]);
-        $attributes['ticket'] = $faker->unique()->numberBetween($min = $attributes['service'] * 100, $max = (($attributes['service'] + 1) * 100) - 1);
-        $client = Client::where('estimated_visit_time', '>', Carbon::now())->where('service', $attributes['service'])->where('completed_at', false)->orderByDesc('estimated_visit_time')->first();
-        
-        if($client != null) {
-            $attributes['estimated_visit_time'] = $client->estimated_visit_time->addMinutes(20);
+        $lastTicket = Client::where('completed_at', null)->where('service', $attributes['service'])->orderByDesc('ticket')->first();
+        if($lastTicket != null)
+        {
+            $attributes['ticket'] = $lastTicket['ticket'] + 1;
+        } else {
+            $attributes['ticket'] = $attributes['service'] * 100;
+        }
+        $clients = Client::where('service', $attributes['service'])->where('completed_at', null)->orderByDesc('estimated_visit_time')->get();
+        if($clients->count() >= 1) {
+            $attributes['estimated_visit_time'] = $clients->first()->estimated_visit_time->addMinutes(20);
         }
         else {
-            $attributes['estimated_visit_time'] = Carbon::now()->addMinutes(20);
+            $attributes['estimated_visit_time'] = Carbon::now();
         }
         
         $attributes['special_key'] = str_random(20);
@@ -66,11 +71,24 @@ class ClientsController extends Controller
     {
         $client['completed_at'] = Carbon::now();
         $client->save();
+        
+        $clients = Client::where('completed_at', null)->where('service', $client->service)->orderBy('estimated_visit_time')->get();
+        foreach($clients as $index=>$client)
+        {
+            $client['estimated_visit_time'] = Carbon::now()->subSeconds(5)->addMinutes(20 * $index);
+            $client->save();
+        }
         return redirect('admin');
     }
     public function destroy(Client $client)
     {
+        $clients = Client::where('completed_at', null)->where('service', $client->service)->orderBy('estimated_visit_time')->get();
         $client->delete();
+        foreach($clients as $index=>$client)
+        {
+            $client['estimated_visit_time'] = Carbon::now()->addMinutes(20 * $index);
+            $client->save();
+        }
         return redirect('admin');
     }
     
