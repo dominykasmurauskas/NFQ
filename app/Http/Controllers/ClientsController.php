@@ -43,12 +43,12 @@ class ClientsController extends Controller
         
         
         $attributes['special_key'] = str_random(20);
-        Client::create($attributes);
+        $client = Client::create($attributes);
         
         
-        session()->flash('ticket', 'Užregistruota sėkmingai. Jūsų bilietėlio nr.: ' . $attributes['ticket']);
+        session()->flash('ticket', 'Registracija sėkminga. Jūsų bilietėlio nr.: ' . $attributes['ticket']);
         
-        return redirect('/');
+        return redirect('/client/' . $client->special_key );
     }
     
     public function timeleft(Client $client)
@@ -76,6 +76,7 @@ class ClientsController extends Controller
     public function update(Client $client)
     {
         $client['completed_at'] = Carbon::now();
+        $client['served_by'] = auth()->user()->id;
         $client->save();
         
         $clients = Client::where('completed_at', null)->where('service', $client->service)->orderBy('estimated_visit_time')->get();
@@ -114,6 +115,7 @@ class ClientsController extends Controller
         if($clients->count() < 1)
         {
             session()->flash('delay', 'Jūsų vizitas negali būti pavėlintas, nes esate paskutinis eilėje laukiantis klientas.');
+            
             return back();
         } else {
             $secondClient = $clients->first();
@@ -122,7 +124,9 @@ class ClientsController extends Controller
             $secondClient->save();
             $client['estimated_visit_time'] = $copiedTime;
             $client->save();
+            
             session()->flash('delay', 'Jūsų vizitas buvo pavėlintas. ');
+            
             return back();
         }
         # code...

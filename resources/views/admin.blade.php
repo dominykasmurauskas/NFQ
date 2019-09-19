@@ -115,7 +115,7 @@
             <td>{{ $client->service }}</td>
             <td>{{ $client->estimated_visit_time }}</td>
             <td>{{ $client->completed_at }}</td>
-            <td>{{ $client->visitDuration() }}</td>
+            <td>{{ $client->visitDuration()->format('%h:%I') }}</td>
             <td>
             <div style="display: flex">
                 <form class="actions" method="POST" action="/clients/delete/{{ $client->id }}">

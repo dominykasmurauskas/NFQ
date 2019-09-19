@@ -25,10 +25,6 @@
       @if(session('timeleft'))
             <div style="color: white; margin-top: 2%">{{ session('timeleft') }}</div>
       @endif
-      
-      @if(session('ticket'))
-            <div style="color: white; margin-top: 2%">{{ session('ticket') }}</div>
-      @endif
     </div>
    
 </div>

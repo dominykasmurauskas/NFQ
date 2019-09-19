@@ -35,3 +35,8 @@ Route::patch('/clients/{id}/delay', 'ClientsController@delay');
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('admin');
+
+Route::get('/statistika', function() {
+    $users = \App\User::where('is_admin', true)->get();
+    return view('statistics', compact('users'));
+});

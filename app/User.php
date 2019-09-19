@@ -36,4 +36,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    
+    public function averageVisit()
+    {
+        $clients = $this->hasMany(Client::class, 'served_by')->get();
+        $sum = $clients->sum(function ($client) {
+            return $client->visitDurationInMinutes();
+        });
+        if($clients->count() <= 0)
+        {
+            return 0;
+        } else {
+            return round(($sum / 60 / $clients->count()), 2);
+        }
+    }
+    
+    public function clientsServed() 
+    {
+        $clients = $this->hasMany(Client::class, 'served_by')->get();
+        return $clients->count();
+    }
 }
