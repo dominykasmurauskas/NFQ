@@ -23,6 +23,7 @@ class ClientsController extends Controller
             'service' => 'required',
             'email' => 'required'
         ]);
+        
         $lastTicket = Client::where('completed_at', null)->where('service', $attributes['service'])->orderByDesc('ticket')->first();
         if($lastTicket != null)
         {
@@ -30,6 +31,8 @@ class ClientsController extends Controller
         } else {
             $attributes['ticket'] = $attributes['service'] * 100;
         }
+        
+        
         $clients = Client::where('service', $attributes['service'])->where('completed_at', null)->orderByDesc('estimated_visit_time')->get();
         if($clients->count() >= 1) {
             $attributes['estimated_visit_time'] = $clients->first()->estimated_visit_time->addMinutes(20);
@@ -38,8 +41,11 @@ class ClientsController extends Controller
             $attributes['estimated_visit_time'] = Carbon::now();
         }
         
+        
         $attributes['special_key'] = str_random(20);
         Client::create($attributes);
+        
+        
         session()->flash('ticket', 'Užregistruota sėkmingai. Jūsų bilietėlio nr.: ' . $attributes['ticket']);
         
         return redirect('/');
@@ -47,7 +53,6 @@ class ClientsController extends Controller
     
     public function timeleft(Client $client)
     {
-        # code...
         $client = Client::where('ticket', request('ticket'))->first();
         if($client != null)
         {
@@ -56,6 +61,7 @@ class ClientsController extends Controller
             session()->flash('timeleft', 'Bilietėlis neegzistuoja');
             return redirect('/');
         }
+        
         $now = Carbon::now();
         if($estimated > $now)
         {
@@ -84,11 +90,6 @@ class ClientsController extends Controller
     {
         $clients = Client::where('completed_at', null)->where('service', $client->service)->orderBy('estimated_visit_time')->get();
         $client->delete();
-        foreach($clients as $index=>$client)
-        {
-            $client['estimated_visit_time'] = Carbon::now()->addMinutes(20 * $index);
-            $client->save();
-        }
         return redirect('admin');
     }
     
@@ -96,8 +97,35 @@ class ClientsController extends Controller
     {
         $client = Client::where('special_key', $key)->firstOrFail();
         
-        return view('client', compact('client'));
-        
+        return view('client', compact('client'));   
+    }
+    public function cancel($id)
+    {
+        $client = Client::findOrFail(['id' => $id])->first();
+        $client->delete();
+        return redirect('/');
+        # code...
+    }
+    
+    public function delay($id)
+    {
+        $client = Client::findOrFail(['id' => $id])->first();
+        $clients = Client::where('estimated_visit_time', '=', $client->estimated_visit_time->addMinutes(20))->where('completed_at', null)->where('service', $client['service'])->get();
+        if($clients->count() < 1)
+        {
+            session()->flash('delay', 'Jūsų vizitas negali būti pavėlintas, nes esate paskutinis eilėje laukiantis klientas.');
+            return back();
+        } else {
+            $secondClient = $clients->first();
+            $copiedTime = $secondClient->estimated_visit_time;
+            $secondClient['estimated_visit_time'] = $client->estimated_visit_time;
+            $secondClient->save();
+            $client['estimated_visit_time'] = $copiedTime;
+            $client->save();
+            session()->flash('delay', 'Jūsų vizitas buvo pavėlintas. ');
+            return back();
+        }
+        # code...
     }
     
 }

@@ -28,6 +28,10 @@ Route::post('/client-register', 'ClientsController@store');
 
 Route::post('/time-remaining', 'ClientsController@timeleft');
 
+Route::post('/clients/{id}/cancel', 'ClientsController@cancel');
+
+Route::patch('/clients/{id}/delay', 'ClientsController@delay');
+
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('admin');

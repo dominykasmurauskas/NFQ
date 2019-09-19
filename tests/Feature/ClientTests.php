@@ -54,4 +54,12 @@ class ClientTests extends TestCase
         $client = factory('App\Client')->create();
         $this->get($client->path(), $client->toArray())->assertStatus(200);
     }
+    /** @test */
+    public function a_client_can_cancel_his_visit()
+    {
+        //$this->withoutExceptionHandling();
+        $client = factory('App\Client')->create();
+        $this->post('/clients/' . $client->id . '/cancel')->assertRedirect('/');
+        $this->assertDatabaseMissing('clients', $client->toArray());
+    }
 }

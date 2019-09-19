@@ -29,16 +29,36 @@
              </tr>
         </tbody>
       </table>
-      
+      @if(session('delay'))
+        <p>{{ session('delay') }}</p>
+      @endif
       <p style="margin-top: 10%">Galimi veiksmai: </p>
       <ul>
-        <li>Peržiūrėti bendrą švieslentę</li>
-        <li>Peržiūrėti statistiką</li>
-        <li>Pavėlinti vizitą</li>
-        <li>Pasirinkti kitą specalistą</li>
-        <li>Atšaukti vizitą</li>
+        <li><a href="/"><button class="btn">Peržiūrėti bendrą švieslentę</button></a></li>
+        <li><a href="/statistika"><button class="btn">Peržiūrėti statistiką</button></a></li>
+        <li>
+          <form method="POST" action="/clients/{{ $client->id }}/delay">
+            @csrf
+            @method('PATCH')
+            <button type="submit" class="btn">Pavėlinti vizitą</button>
+          </form>
+        </li>
+        <li>
+        <form method="POST" action="/clients/{{ $client->id }}/cancel">
+            @csrf
+            <button type="submit" class="btn">Atšaukti vizitą</button>
+          </form>
+        </li>
       </ul>
       <style>
+        .btn {
+          background: none !important;
+          border: none !important;
+          color: white !important;
+        }
+        .btn:hover {
+          text-decoration: underline !important;
+        }
         th {
             vertical-align: middle !important;
             font-weight: normal !important;
