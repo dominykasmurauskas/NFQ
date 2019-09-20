@@ -1,7 +1,9 @@
 @extends('layouts.public')
 
 @section('content')
-    <h1 class="text-center" style="color: white; margin-top: 10%; margin-bottom: 5%">STATISTIKA</h1>
+    <h1 class="text-center" style="margin-top: 10%; margin-bottom: 5%">STATISTIKA</h1>
+    
+    <h3>Daugiausiai klientų aptarnavę specialistai (max 5)</h3>
     <table class="table">
         <thead>
             <tr>
@@ -35,16 +37,13 @@
             @endforelse
           </tbody>
     </table>
-    
     <style>
     th {
         vertical-align: middle !important;
         font-weight: normal !important;
         text-align: center;
-        color: white;
     }
     td {
-        color: white;
         text-align: center;
         font-size: 16px;
         font-family: 'Josefin Slab', serif;

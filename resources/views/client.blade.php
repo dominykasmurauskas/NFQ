@@ -1,9 +1,10 @@
 @extends('layouts.public')
 
 @section('content')
+<meta http-equiv="refresh" content="5">
     <div style="margin-top: 10%">
       @if(session('ticket'))
-      <div style="color: white">{{ session('ticket') }}</div> 
+      <div>{{ session('ticket') }}</div> 
       @endif
       <h4 style="margin-bottom: 5%">Jūsų vizito informacija: </h4>
     </div>
@@ -57,7 +58,6 @@
         .btn {
           background: none !important;
           border: none !important;
-          color: white !important;
         }
         .btn:hover {
           text-decoration: underline !important;
@@ -66,16 +66,11 @@
             vertical-align: middle !important;
             font-weight: normal !important;
             text-align: center;
-            color: white;
         }
         td {
             text-align: center;
             font-size: 16px;
-            color: white;
             font-family: 'Josefin Slab', serif;
-        }
-        body {
-            color: white;
         }
       </style>
 @endsection

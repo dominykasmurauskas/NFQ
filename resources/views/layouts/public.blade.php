@@ -20,6 +20,7 @@
     <style>
     body {
         background-color: #0093D1;
+        background-color: lightgrey !important;
     }
     </style>
 </body>

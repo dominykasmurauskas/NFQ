@@ -36,7 +36,7 @@ class ClientsController extends Controller
         $clients = Client::where('service', $attributes['service'])->where('completed_at', null)->orderByDesc('estimated_visit_time')->get();
         
         $specialists = \App\User::where('service_id', $attributes['service'])->where('served_clients', '>', '0')->get();
-        if($specialists->count())
+        if($specialists->count() > 0)
         {
             $sum = 0;
             foreach($specialists as $specialist)
@@ -98,6 +98,11 @@ class ClientsController extends Controller
     public function cancel($id)
     {
         $client = Client::findOrFail(['id' => $id])->first();
+        if($client->completed_at != null)
+        {
+            session()->flash('delay', 'Jūsų vizitas jau yra įvykęs.');
+            return back();
+        }
         $client->delete();
         return redirect('/');
         # code...
@@ -107,6 +112,11 @@ class ClientsController extends Controller
     {
         $client = Client::findOrFail(['id' => $id])->first();
         $clients = Client::where('estimated_visit_time', '=', $client->estimated_visit_time->addMinutes(20))->where('completed_at', null)->where('service', $client['service'])->get();
+        if($client->completed_at != null)
+        {
+            session()->flash('delay', 'Jūsų vizitas jau yra įvykęs.');
+            return back();
+        }
         if($clients->count() < 1)
         {
             session()->flash('delay', 'Jūsų vizitas negali būti pavėlintas, nes esate paskutinis eilėje laukiantis klientas.');

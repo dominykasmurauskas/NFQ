@@ -2,13 +2,13 @@
 @extends('layouts.public')
 
 @section('content')
-<meta http-equiv="refresh" content="5">
+
 
 
 <div class="col-lg-6 offset-lg-3 col-sm-12" style="margin-top: 20%">
-  <h2 style="color: white">Švieslentė</h2>
+  <h2>Švieslentė</h2>
   <div style="margin: 0 auto; width: 100%">
-    <p style="font-size: 10px; color: white">Paskutinį kartą atnaujinta: {{ Carbon::now() }}</p>
+    <p style="font-size: 10px">Paskutinį kartą atnaujinta: {{ Carbon::now() }}</p>
     @include('table')
       <div class="row" id="actions" style="margin-top: 10%">
         <form method="POST" class="form-inline float-left" action="/time-remaining">
@@ -23,7 +23,7 @@
       </div>
 
       @if(session('timeleft'))
-            <div style="color: white; margin-top: 2%">{{ session('timeleft') }}</div>
+            <div style="margin-top: 2%">{{ session('timeleft') }}</div>
       @endif
     </div>
    
@@ -47,9 +47,6 @@
   }
   #actions {
     vertical-align: middle !important;
-  }
-  table {
-    color: white !important;
   }
 </style>
 @endsection

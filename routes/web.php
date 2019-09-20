@@ -39,6 +39,6 @@ Auth::routes();
 Route::get('/admin', 'HomeController@index')->name('admin');
 
 Route::get('/statistika', function() {
-    $users = \App\User::where('is_admin', true)->get();
+    $users = \App\User::where('is_admin', true)->orderBy('served_clients')->limit(5)->get();
     return view('statistics', compact('users'));
 });
