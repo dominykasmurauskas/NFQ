@@ -1,8 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
+
 <h1 class="text-center" style="margin-top: 10px; margin-bottom: 10px">Specialisto puslapis</h1>
+
 <p class="text-center">Sveiki, {{ auth()->user()->name }}! Šiame puslapyje matote klientus, kurie pasirinko {{ auth()->user()->service_id }} paslaugą.</p>
+<button style="float: right; margin-bottom: 1%" class="btn btn-dark"><a href="{{ route('logout') }}" style="color: white;">Atsijungti</a></button>
 <div>
   <p class="h4">Dabar aptarnaujama:</p>
   <table class="table" id="data">

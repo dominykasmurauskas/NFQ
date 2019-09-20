@@ -16,9 +16,9 @@ Route::get('/', function () {
     return view('welcome', compact('clients'));
 });
 
-Route::patch('/clients/completed/{client}', 'ClientsController@update')->middleware('IsAdmin');
+Route::patch('/clients/completed/{client}', 'HomeController@update');
 
-Route::delete('/clients/delete/{client}', 'ClientsController@destroy')->middleware('IsAdmin');
+Route::delete('/clients/delete/{client}', 'HomeController@destroy');
 
 Route::get('/client/{key}', 'ClientsController@show');
 

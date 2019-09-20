@@ -31,6 +31,28 @@ class HomeController extends Controller
         $completedClients = Client::where('service', auth()->user()->service_id)->whereNotNull('completed_at')->orderBy('estimated_visit_time')->get();
 
         return view('admin', compact('presentClients', 'waitingClients', 'completedClients'));
-            
+    }
+    
+    public function update(Client $client)
+    {
+        $client['completed_at'] = Carbon::now();
+        $client['served_by'] = auth()->user()->id;
+        $client->save();
+        
+        $clients = Client::where('completed_at', null)->where('service', $client->service)->orderBy('estimated_visit_time')->get();
+        foreach($clients as $index=>$client)
+        {
+            $client['estimated_visit_time'] = Carbon::now()->subSeconds(5)->addMinutes(20 * $index);
+            $client->save();
+        }
+        $user = auth()->user();
+        $user->updateServedClients();
+        $user->save();
+        return redirect('admin');
+    }
+    public function destroy(Client $client)
+    {
+        $client->delete();
+        return redirect('admin');
     }
 }

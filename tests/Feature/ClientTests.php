@@ -19,7 +19,11 @@ class ClientTests extends TestCase
     public function a_client_can_register()
     {   $this->withoutExceptionHandling();
         $client = factory('App\Client')->create();
-        $this->post('/client-register', $client->toArray())->assertRedirect('/');
+        $specialist = factory('App\User')->create();
+        $specialist['service_id'] = $client->service;
+        $specialist['served_clients'] = 1;
+        $specialist->save();
+        $this->post('/client-register', $client->toArray());
         $this->assertDatabaseHas('clients', $client->toArray());
     }
     

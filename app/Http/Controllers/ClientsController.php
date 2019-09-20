@@ -34,8 +34,22 @@ class ClientsController extends Controller
         
         
         $clients = Client::where('service', $attributes['service'])->where('completed_at', null)->orderByDesc('estimated_visit_time')->get();
+        
+        $specialists = \App\User::where('service_id', $attributes['service'])->where('served_clients', '>', '0')->get();
+        if($specialists->count())
+        {
+            $sum = 0;
+            foreach($specialists as $specialist)
+            {
+                $sum += $specialist->averageVisit();
+            }
+            $averageWaitingTime = round($sum / $specialists->count(), 2);
+        } else {
+            $averageWaitingTime = 20;
+        }
+        
         if($clients->count() >= 1) {
-            $attributes['estimated_visit_time'] = $clients->first()->estimated_visit_time->addMinutes(20);
+            $attributes['estimated_visit_time'] = $clients->first()->estimated_visit_time->addMinutes($averageWaitingTime);
         }
         else {
             $attributes['estimated_visit_time'] = Carbon::now();
@@ -73,26 +87,7 @@ class ClientsController extends Controller
         return redirect('/');
     }
     
-    public function update(Client $client)
-    {
-        $client['completed_at'] = Carbon::now();
-        $client['served_by'] = auth()->user()->id;
-        $client->save();
-        
-        $clients = Client::where('completed_at', null)->where('service', $client->service)->orderBy('estimated_visit_time')->get();
-        foreach($clients as $index=>$client)
-        {
-            $client['estimated_visit_time'] = Carbon::now()->subSeconds(5)->addMinutes(20 * $index);
-            $client->save();
-        }
-        return redirect('admin');
-    }
-    public function destroy(Client $client)
-    {
-        $clients = Client::where('completed_at', null)->where('service', $client->service)->orderBy('estimated_visit_time')->get();
-        $client->delete();
-        return redirect('admin');
-    }
+
     
     public function show($key)
     {

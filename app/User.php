@@ -57,4 +57,10 @@ class User extends Authenticatable
         $clients = $this->hasMany(Client::class, 'served_by')->get();
         return $clients->count();
     }
+    
+    public function updateServedClients()
+    {
+        # code...
+        return $this->served_clients = $this->served_clients + 1;
+    }
 }
