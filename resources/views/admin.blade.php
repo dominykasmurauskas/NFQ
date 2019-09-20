@@ -97,7 +97,16 @@
     </table>
 </div>
 <div>
-  <p class="h4">Jau aptarnauti klientai</p>
+  <div class="row">
+    <p class="h4" style="margin-left: 1.5%">Jau aptarnauti klientai</p>
+    <form style="margin-left: auto" method="POST" action="/admin/delete-completed">
+    @csrf
+    @method('DELETE')
+      <button type="submit" style="float: right; margin-bottom: 1%" class="btn btn-dark">Ištrinti visus</button>
+    </form>
+  </div>
+  
+
   <table class="table" id="data">
     <thead>
       <tr>

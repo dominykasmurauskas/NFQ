@@ -20,6 +20,8 @@ Route::patch('/clients/completed/{client}', 'HomeController@update');
 
 Route::delete('/clients/delete/{client}', 'HomeController@destroy');
 
+Route::delete('/admin/delete-completed', 'HomeController@deleteCompleted');
+
 Route::get('/client/{key}', 'ClientsController@show');
 
 Route::get('/client-register', 'ClientsController@create');

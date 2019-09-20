@@ -28,7 +28,7 @@ class HomeController extends Controller
         $clients = null;
         $presentClients = Client::where('service', auth()->user()->service_id)->where('completed_at', null)->where('estimated_visit_time', '<', Carbon::now())->orderBy('estimated_visit_time')->get();
         $waitingClients = Client::where('service', auth()->user()->service_id)->where('completed_at', null)->where('estimated_visit_time', '>', Carbon::now())->orderBy('estimated_visit_time')->get();
-        $completedClients = Client::where('service', auth()->user()->service_id)->whereNotNull('completed_at')->orderBy('estimated_visit_time')->get();
+        $completedClients = Client::where('served_by', auth()->user()->id)->orderBy('estimated_visit_time')->get();
 
         return view('admin', compact('presentClients', 'waitingClients', 'completedClients'));
     }
@@ -48,6 +48,12 @@ class HomeController extends Controller
         $user = auth()->user();
         $user->updateServedClients();
         $user->save();
+        return redirect('admin');
+    }
+    
+    public function deleteCompleted()
+    {
+        \App\Client::where('served_by', auth()->user()->id)->delete();
         return redirect('admin');
     }
     public function destroy(Client $client)
