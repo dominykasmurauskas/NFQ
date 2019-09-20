@@ -13,24 +13,30 @@ class Client extends Model
     
     public function visitDuration()
     {
+        //get time difference between estimated_visit_tiem and the date when completed
         $duration = (new Carbon($this->estimated_visit_time))->diff($this->completed_at);
         return $duration;
     }
     public function visitDurationInMinutes() 
     {
-        return (int) (new Carbon($this->estimated_visit_time))->diffInSeconds($this->completed_at);
+        //get visit duration in minutes
+        return (int) (new Carbon($this->estimated_visit_time))
+                        ->diffInMinutes($this->completed_at);
     }
     public function path() {
+        //return path to client's dashboard
         return '/client/' . $this->special_key;
     }
     
     public function timeleft()
     {
+        //count the time left until the visit
         if((new Carbon ($this->estimated_visit_time)) <= Carbon::now())
         {
             return "0:00";
         } else {
-            return (new Carbon($this->estimated_visit_time))->diff(Carbon::now())->format('%h:%I');
+            return (new Carbon($this->estimated_visit_time))
+                    ->diff(Carbon::now())->format('%h:%I');
 
         }
     }

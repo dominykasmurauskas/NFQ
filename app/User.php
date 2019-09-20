@@ -40,27 +40,33 @@ class User extends Authenticatable
     
     public function averageVisit()
     {
+        //find all clients who have been served by this client
         $clients = $this->hasMany(Client::class, 'served_by')->get();
+        //sum all visit durations
         $sum = $clients->sum(function ($client) {
             return $client->visitDurationInMinutes();
         });
+        //check how many clients served
         if($clients->count() <= 0)
         {
+            // return 0
             return 0;
         } else {
-            return round(($sum / 60 / $clients->count()), 2);
+            //return the average
+            return round(($sum / $clients->count()), 2);
         }
     }
     
     public function clientsServed() 
     {
+        //check how mnay clients served
         $clients = $this->hasMany(Client::class, 'served_by')->get();
         return $clients->count();
     }
     
     public function updateServedClients()
     {
-        # code...
+        //update user statistics
         return $this->served_clients = $this->served_clients + 1;
     }
 }
