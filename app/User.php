@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -68,5 +69,28 @@ class User extends Authenticatable
     {
         //update user statistics
         return $this->served_clients = $this->served_clients + 1;
+    }
+    
+    public function groupVisitsByDays() {
+        //query on the database to group clients by day
+        $groups = DB::table('clients')
+                    ->where('served_by', '=', $this->id)
+                    ->select(DB::raw('DATE(completed_at) as date'), 
+                            DB::raw('count(*) as clients'))
+                    ->groupBy('date')
+                    ->limit(30)
+                    ->get();
+        return $groups;
+
+    }
+    public function groupVisitsByHours() {
+        $groups = DB::table('clients')
+                ->where('served_by', '=', $this->id)
+                ->limit(30)
+                ->select(DB::raw('hour(completed_at) as hour'), DB::raw('COUNT(id) as clients'))
+                ->groupBy(DB::raw('hour'))
+                ->get();
+        return $groups;
+
     }
 }

@@ -13,6 +13,7 @@
               <th scope="col" width="15%">Vid. apsilankymo trukmė (min)</th>
               <th scope="col">Aptarnauta klientų</th>
               <th scope="col">Kontaktai</th>
+              <th scope="col">Veiksmai</th>
             </tr>
           </thead>
           <tbody>
@@ -24,10 +25,12 @@
                   <td>{{ $specialist->averageVisit() }}</td>
                   <td>{{ $specialist->clientsServed() }}</td>
                   <td>{{ $specialist->email }}</td>
+                  <td><a href="/specialist/{{ $specialist->id}}">Detaliau</a></td>
                </tr>
             @empty
               <tr>
                   <th scope="row">-</th>
+                  <td>-</td>
                   <td>-</td>
                   <td>-</td>
                   <td>-</td>

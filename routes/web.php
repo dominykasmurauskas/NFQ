@@ -31,6 +31,12 @@ Route::delete('/admin/delete-completed', 'HomeController@deleteCompleted');
 //client dashboard
 Route::get('/client/{key}', 'ClientsController@show');
 
+//specialist's dashboard
+Route::get('/specialist/{id}', function($id) {
+    $specialist = \App\User::findOrFail($id);
+    return view('specialist-show', compact('specialist'));
+});
+
 //client register page
 Route::get('/client-register', 'ClientsController@create');
 
