@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Client;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ClientRegistered;
 use Faker\Generator as Faker;
 use Carbon\Carbon;
 class ClientsController extends Controller
@@ -60,7 +62,7 @@ class ClientsController extends Controller
         }
         
         //apply the visit duration
-        if($clients->count() == 1) {
+        if($clients != null) {
             $attributes['estimated_visit_time'] = $clients->estimated_visit_time
                             ->addMinutes($averageWaitingTime);
         }
@@ -75,7 +77,9 @@ class ClientsController extends Controller
         $client = Client::create($attributes);
         
         //let's fire off an email
-        
+        Mail::to($client->email)->send(
+            new ClientRegistered($client)
+        );
         
         session()->flash('ticket', 'Registracija sėkminga. Jūsų bilietėlio nr.: ' . 
                                     $attributes['ticket']);
