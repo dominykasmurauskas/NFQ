@@ -1,11 +1,11 @@
-# NFQ akademijos atrankos Back-end uûduotis
+# NFQ akademijos atrankos Back-end u≈æduotis
 
-Ligoninese, bankuose, paöte, pasu iödavimo skyriuose ir pan. galima matyti ekranus su skaiciukais. Atejes klientas pasirenka paslauga ir gauna lapuka pas pasirinkta specialista/darbuotoja/langeli ir laukia savo eiles, kuriai sulaukti ne visada pakanka kantrybes. äio projekto tikslas yra patobulinti tokia veikimo sistema nurodant klientui apytiksli laukimo laika, sudarant specialistu uûimtumo statistika bei suteikiant klientui tokias galimybes kaip pavelinti ar aplamai atöaukti savo vizita.
+Ligoninese, bankuose, pa≈°te, pasu i≈°davimo skyriuose ir pan. galima matyti ekranus su skaiciukais. Atejes klientas pasirenka paslauga ir gauna lapuka pas pasirinkta specialista/darbuotoja/langeli ir laukia savo eiles, kuriai sulaukti ne visada pakanka kantrybes. ≈†io projekto tikslas yra patobulinti tokia veikimo sistema nurodant klientui apytiksli laukimo laika, sudarant specialistu u≈æimtumo statistika bei suteikiant klientui tokias galimybes kaip pavelinti ar aplamai at≈°aukti savo vizita.
 
 
-## Pradûia
+## Prad≈æia
 
-äiu instrukciju pagalba galesite idiegti sistema savo kompiuteryje tolesnei pletrai ar testavimo tikslams. Norint projekta paleisti gyvai, tai bus apraöyta kitame skyriuje. 
+≈†iu instrukciju pagalba galesite idiegti sistema savo kompiuteryje tolesnei pletrai ar testavimo tikslams. Norint projekta paleisti gyvai, tai bus apra≈°yta kitame skyriuje. 
 
 ### Diegimas
 
@@ -24,7 +24,7 @@ Composer pagalba idiekite projekto priklausomybes
 composer install
 ```
 
-Nukopijuokite pavyzdini konfiguracijos faila ir jame uûpildykite duomenis
+Nukopijuokite pavyzdini konfiguracijos faila ir jame u≈æpildykite duomenis
 ```
 cp .env.example .env
 ```
@@ -34,7 +34,7 @@ Sugeneruokite nauja programos rakta
 php artisan key:generate
 ```
 
-Paruoökite duomenu baze (prieö tai isitikinkite, kad konfiguracijos failas teisingai uûpildytas)
+Paruo≈°kite duomenu baze (prie≈° tai isitikinkite, kad konfiguracijos failas teisingai u≈æpildytas)
 ```
 php artisan migrate
 ```
@@ -44,31 +44,39 @@ Paleiskite vietini serveri
 php artisan serve
 ```
 
-Jei nenurodyta kitaip, virtualus serveris bus pasiekiamas öiuo adresu: http://localhost:8000
+Jei nenurodyta kitaip, virtualus serveris bus pasiekiamas ≈°iuo adresu: http://localhost:8000
 
 ## Programos testavimas
 
-Programoje yra panaudoti PHPUnit testai. Juos visus galite paleisti pasinaudoje öia komanda:
+Programoje yra panaudoti PHPUnit testai. Juos visus galite paleisti pasinaudoje ≈°ia komanda:
 ```
 php vendor/phpunit/phpunit/phpunit
 ```
 
-###### Svarbu: phpunit.xml faile yra nurodyta, kad testavimai paleidûiami ne pagal numatytaji 'Test.php' suffix'a, bet pagal 'Tests.php'. Taip pat norint paleisti testavima nebutina migruoti duomenu bazes - PHPUnit testai vykdomi atmintyje.
+###### Svarbu: phpunit.xml faile yra nurodyta, kad testavimai paleid≈æiami ne pagal numatytaji 'Test.php' suffix'a, bet pagal 'Tests.php'. Taip pat norint paleisti testavima nebutina migruoti duomenu bazes - PHPUnit testai vykdomi atmintyje.
 
 ## Technologijos
 
 * [Laravel](https://laravel.com/docs/5.7/installation) - Back-end PHP karkasas
 * [Bootstrap 4.3.1](https://getbootstrap.com/) - Front-end CSS & JS karkasas
 
-## NFQ back-end uûduoties reikalavimu nuorodos
-ér. cia: [NFQ back-end uûduoties reikalavimu igyvendinimo nuorodos](https://gist.github.com/dominykasmurauskas/1533064c447caf655eed16e7ed1b93fb)
+## NFQ back-end u≈æduoties reikalavimu nuorodos
+≈Ωr. cia: [NFQ back-end u≈æduoties reikalavimu igyvendinimo nuorodos](https://gist.github.com/dominykasmurauskas/1533064c447caf655eed16e7ed1b93fb)
 
-## éinomos klaidos
+## ≈Ωinomos klaidos
 Nera
 
 ## Autoriai
 
 * **Dominykas Murauskas** - [LinkedIN](https://www.linkedin.com/in/dominykas-murauskas/)
+
+## Galerija
+
+<img src="https://dominykasmurauskas.lt/githubImages/Svieslente.png" alt="Svieslente" width="200"/> <img src="https://dominykasmurauskas.lt/githubImages/specialistas.png" alt="Specialisto puslapis" width="200" />
+<img src="https://dominykasmurauskas.lt/githubImages/klientas.png" alt="Kliento puslapis" width="200" />
+<img src="https://dominykasmurauskas.lt/githubImages/statistika1.png" alt="Statistika 1" width="200" />
+<img src="https://dominykasmurauskas.lt/githubImages/statistika2.png" alt="Statistika 2" width="200" />
+<img src="https://dominykasmurauskas.lt/githubImages/mail.png" alt="Mail notification" width="200"/>
 
 ## Licenzija
 
