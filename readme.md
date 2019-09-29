@@ -1,45 +1,45 @@
 # NFQ akademijos atrankos Back-end užduotis
 
-Ligoninese, bankuose, pašte, pasu išdavimo skyriuose ir pan. galima matyti ekranus su skaiciukais. Atejes klientas pasirenka paslauga ir gauna lapuka pas pasirinkta specialista/darbuotoja/langeli ir laukia savo eiles, kuriai sulaukti ne visada pakanka kantrybes. Šio projekto tikslas yra patobulinti tokia veikimo sistema nurodant klientui apytiksli laukimo laika, sudarant specialistu užimtumo statistika bei suteikiant klientui tokias galimybes kaip pavelinti ar aplamai atšaukti savo vizita.
+Ligoninėse, bankuose, pašte, pasų išdavimo skyriuose ir pan. galima matyti ekranus su skaičiukais. Atėjęs klientas pasirenka paslaugą ir gauna lapuką pas pasirinktą specialistą/darbuotoją/langelį ir laukia savo eilės, kuriai sulaukti ne visada pakanka kantrybės. Šio projekto tikslas yra patobulinti tokią veikimo sistemą nurodant klientui apytikslį laukimo laiką, sudarant specialistų užimtumo statistiką bei suteikiant klientui tokias galimybes kaip pavėlinti ar aplamai atšaukti savo vizitą.
 
 
 ## Pradžia
 
-Šiu instrukciju pagalba galesite idiegti sistema savo kompiuteryje tolesnei pletrai ar testavimo tikslams. Norint projekta paleisti gyvai, tai bus aprašyta kitame skyriuje. 
+Šių instrukcijų pagalba galėsite įdiegti sistemą savo kompiuteryje tolesnei plėtrai ar testavimo tikslams. Norint projektą paleisti gyvai, tai bus aprašyta kitame skyriuje. 
 
 ### Diegimas
 
-Parsisiuskite projekto vietine kopija i savo kompiuteri
+Parsisiųskite projekto vietinę kopiją į savo kompiuterį
 ```
 git clone https://github.com/dominykasmurauskas/NFQ.git
 ```
 
-Atsidarykite projekto aplanka
+Atsidarykite projekto aplanką
 ```
 cd NFQ
 ```
 
-Composer pagalba idiekite projekto priklausomybes
+Composer pagalba įdiekite projekto priklausomybes
 ```
 composer install
 ```
 
-Nukopijuokite pavyzdini konfiguracijos faila ir jame užpildykite duomenis
+Nukopijuokite pavyzdinį konfigūracijos failą ir jame užpildykite duomenis
 ```
 cp .env.example .env
 ```
 
-Sugeneruokite nauja programos rakta
+Sugeneruokite naują programos raktą
 ```
 php artisan key:generate
 ```
 
-Paruoškite duomenu baze (prieš tai isitikinkite, kad konfiguracijos failas teisingai užpildytas)
+Paruoškite duomenų bazę (prieš tai įsitikinkite, kad konfigūracijos failas teisingai užpildytas)
 ```
 php artisan migrate
 ```
 
-Paleiskite vietini serveri
+Paleiskite vietinį serverį
 ```
 php artisan serve
 ```
@@ -48,19 +48,34 @@ Jei nenurodyta kitaip, virtualus serveris bus pasiekiamas šiuo adresu: http://l
 
 ## Programos testavimas
 
-Programoje yra panaudoti PHPUnit testai. Juos visus galite paleisti pasinaudoje šia komanda:
+Norint ištestuoti gyvai paleistą versiją, galite susikurti naują specialistą atidarę /register URL. Specialistas bus sukurtas pirmai paslaugai. Jeigu norite pakeisti paslaugą, kurią teikia specialistas, tai padaryti galima kolkas tik rankiniu būdu pakeitus duomenų bazės įrašą.
+
+Keli testiniai prisijungimai:
+Email: admin@admin.com
+Password: Admin123
+Paslauga: 1
+
+Email: admin2@admin.com
+Password: Admin123
+Paslauga: 2
+
+Email: admin3@admin.com
+Password: Admin123
+Paslauga: 5
+
+Programoje yra panaudoti PHPUnit testai. Juos visus galite paleisti pasinaudoję šia komanda:
 ```
 php vendor/phpunit/phpunit/phpunit
 ```
 
-###### Svarbu: phpunit.xml faile yra nurodyta, kad testavimai paleidžiami ne pagal numatytaji 'Test.php' suffix'a, bet pagal 'Tests.php'. Taip pat norint paleisti testavima nebutina migruoti duomenu bazes - PHPUnit testai vykdomi atmintyje.
+###### Svarbu: phpunit.xml faile yra nurodyta, kad testavimai paleidžiami ne pagal numatytąjį 'Test.php' suffix'a, bet pagal 'Tests.php'. Taip pat norint paleisti testavimą nebūtina migruoti duomenų bazės - PHPUnit testai vykdomi atmintyje.
 
 ## Technologijos
 
 * [Laravel](https://laravel.com/docs/5.7/installation) - Back-end PHP karkasas
 * [Bootstrap 4.3.1](https://getbootstrap.com/) - Front-end CSS & JS karkasas
 
-## NFQ back-end užduoties reikalavimu nuorodos
+## NFQ back-end užduoties reikalavimų nuorodos
 Žr. cia: [NFQ back-end užduoties reikalavimu igyvendinimo nuorodos](https://gist.github.com/dominykasmurauskas/1533064c447caf655eed16e7ed1b93fb)
 
 ## Žinomos klaidos
@@ -78,6 +93,6 @@ Nera
 <img src="https://dominykasmurauskas.lt/githubImages/statistika2.png" alt="Statistika 2" width="200" />
 <img src="https://dominykasmurauskas.lt/githubImages/mail.png" alt="Mail notification" width="200"/>
 
-## Licenzija
+## Licencija
 
 MIT
